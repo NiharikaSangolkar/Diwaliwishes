@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diwali Greeting Card</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Verdana', sans-serif;
+            background: url('HappyDiwali3.gif') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 900px;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-icon {
+            position: absolute;
+            top:15px;
+            right: 15px;
+            width: 60px;
+            height: auto;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: whitesmoke;
+            margin-top: 1rem;
+            font-family: 'Georgia', serif;
+        }
+
+        #clickDiyaMessage {
+            font-size: 1.2rem;
+            color: #ff8c00;
+            margin-top: rem;
+            font-style: italic;
+        }
+
+        @keyframes explode {
+            0% { transform: translateY(0) scaleX(0.6); opacity: 1; }
+            80% { transform: translateY(-150px) scaleX(1); opacity: 0.8; }
+            100% { transform: translateY(-200px) scaleX(1.2); opacity: 0; }
+        }
+
+        .diya {
+            width: 270px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 1.2rem;
+            margin-top: 13.3rem;
+            animation: floatingDiagonal 4s ease-in-out infinite;
+        }
+
+        @keyframes floatingDiagonal {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(20px, -10px); }
+            50% { transform: translate(0, -20px); }
+            75% { transform: translate(-20px, -10px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .diya:hover {
+            transform: scale(1.1);
+        }
+
+        .diya-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .click-message {
+            font-size: 1.0rem;
+            color: #ffdf80;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            font-style: italic;
+        }
+
+        .show-message {
+            opacity: 1;
+        }
+
+        .lamp {
+            width: 80px;
+            height: auto;
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #b15b00;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            
+            width: 80%;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 1rem;
+            background-color: #ff8c00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <img src="Insta.png" alt="Company Icon" class="company-icon">
+    <div class="card">
+        <p id="instructionMessage">Click on the Diya to get started!</p>
+
+        <div class="diya-container">
+            <img src="—diya.png" alt="Diya" class="diya" onclick="askForName()" />
+        </div>
+
+        <div id="nameInputContainer" style="display:none;">
+            <input type="text" id="nameInput" placeholder="Enter your name">
+            <button onclick="submitName()">Submit</button>
+        </div>
+
+        <div id="clickMessage" class="click-message">
+            <!-- The wish will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Array of Diwali wishes
+        const wishes = [
+            "May this Diwali bring peace, prosperity, and happiness to you and your family!",
+            "Wishing you a year full of light, joy, and success!",
+            "May the divine light of Diwali spread into your life and bring peace, joy, and happiness!",
+            "Let’s celebrate the festival in the true sense by spreading joy and light up the world of others.",
+            "Wishing you a Diwali filled with laughter, good health, and joy!",
+            "May the warmth and splendor of Diwali fill your life with new opportunities and endless happiness!",
+            "Let each Diya you light bring a glow of happiness in your life!",
+            "Hope this Diwali ushers in good fortune, wealth, and the fulfillment of your dreams!",
+            "May the divine light of Diwali always guide you towards happiness and success!",
+            "Here’s to new beginnings and endless prosperity this Diwali season!"
+        ];
+
+        let userName = '';
+
+        // Function triggered when Diya is clicked, asking for the user's name
+        function askForName() {
+            document.getElementById('instructionMessage').style.display = 'none';
+            document.getElementById('nameInputContainer').style.display = 'block';
+        }
+
+        // Function triggered when the name is submitted
+        function submitName() {
+            const nameInput = document.getElementById('nameInput');
+            userName = nameInput.value.trim(); // Get the entered name
+            if (userName) {
+                displayRandomWish(); // Call the function to display the wish after name submission
+            } else {
+                alert('Please enter your name to receive a wish!');
+            }
+        }
+
+        // Function to display a random wish with the entered name
+        function displayRandomWish() {
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            const personalizedWish = userName ? `${userName}, ${randomWish}` : randomWish;
+
+            const messageElement = document.getElementById('clickMessage');
+            messageElement.textContent = personalizedWish;
+            messageElement.classList.add('show-message');
+
+            const nameInputContainer = document.getElementById('nameInputContainer');
+            nameInputContainer.style.display = 'none'; // Hide the input field after submission
+
+            const audio = new Audio('diwali-song-61.mp3');
+            audio.play();
+
+            const speechMessage = new SpeechSynthesisUtterance(personalizedWish);
+            speechMessage.lang = "en-US";
+            speechMessage.pitch = 1;
+            speechMessage.rate = 1;
+            window.speechSynthesis.speak(speechMessage);
+        }
+    </script>
+</body>
+</html>
